@@ -105,3 +105,4 @@
   </div>
   </div>
 </footer>
+<script src="js/search.js"></script>

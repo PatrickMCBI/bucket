@@ -34,7 +34,7 @@ include 'includes/nav.php';
                           <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
                           <div class="text-15 text-light-1 ls-2 lh-16">
-                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus"  name="terms" id="terms-index"/>
                           </div>
                         </div>
 
@@ -135,7 +135,7 @@ include 'includes/nav.php';
                           <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
                           <div class="text-15 text-light-1 ls-2 lh-16">
-                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                            <input autocomplete="off" type="text" placeholder="Where are you going?" class="js-search js-dd-focus" name="terms" id="terms-index"/>
                           </div>
                         </div>
 
@@ -3579,7 +3579,7 @@ include 'includes/nav.php';
                           <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
                           <div class="text-15 text-light-1 ls-2 lh-16">
-                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus"  name="terms" id="terms-index"/>
                           </div>
                         </div>
 
@@ -7023,7 +7023,7 @@ include 'includes/nav.php';
                           <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
                           <div class="text-15 text-light-1 ls-2 lh-16">
-                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus"  name="terms" id="terms-index"/>
                           </div>
                         </div>
 
@@ -10467,7 +10467,7 @@ include 'includes/nav.php';
                           <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
                           <div class="text-15 text-light-1 ls-2 lh-16">
-                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus"  name="terms" id="terms-index"/>
                           </div>
                         </div>
 
@@ -13911,7 +13911,7 @@ include 'includes/nav.php';
                           <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
                           <div class="text-15 text-light-1 ls-2 lh-16">
-                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus"  name="terms" id="terms-index"/>
                           </div>
                         </div>
 
@@ -17355,7 +17355,7 @@ include 'includes/nav.php';
                           <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
                           <div class="text-15 text-light-1 ls-2 lh-16">
-                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                            <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus"  name="terms" id="terms-index"/>
                           </div>
                         </div>
 

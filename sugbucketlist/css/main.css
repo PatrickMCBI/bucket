@@ -1,3 +1,9 @@
+.ui-front{
+  z-index: 1000 !important;
+}
+.ui-autocomplete{
+  position: fixed !important;
+}
 .ratio {
   position: relative;
   display: block;
@@ -4398,7 +4404,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .dashboard__content {
   width: 100%;
-  padding: 60px;
+  padding: 20px;
+  /* padding: 60px; */
   padding-bottom: 0;
 }
 

@@ -1,3 +1,4 @@
+<?php session_start();  ?>;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +18,13 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/vendors.css">
   <link rel="stylesheet" href="css/main.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+ 
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <!-- Bootstrap Css -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
   <title>SUGBUCKET LIST | DASHBOARD</title>
 </head>
@@ -46,7 +54,9 @@
 
 
   <div class="header-margin"></div>
-  <header data-add-bg="" class="header -dashboard bg-white js-header" data-x="header" data-x-toggle="is-menu-opened">
+  
+
+  <header data-add-bg="" class="header -dashboard bg-white js-header" data-x="header" data-x-toggle="is-menu-opened" data-id="<?php echo $_SESSION['user_id'] ?>">
     <div data-anim="fade" class="header__container px-30 sm:px-20">
       <div class="-left-side">
         <a href="index.php" class="header-logo" data-x="header-logo" data-x-toggle="is-logo-dark">
@@ -63,7 +73,7 @@
             </button>
 
             <div class="single-field relative d-flex items-center md:d-none ml-30">
-              <input class="pl-50 border-light text-dark-1 h-50 rounded-8" type="email" placeholder="Search">
+              <input class="pl-50 border-light text-dark-1 h-50 rounded-8" type="text" placeholder="Search" name="terms" id="terms">
               <button class="absolute d-flex items-center h-full">
                 <i class="icon-search text-20 px-15 text-dark-1"></i>
               </button>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 15, 2023 at 04:10 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.24
+-- Host: localhost
+-- Generation Time: Apr 19, 2023 at 05:28 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,7 @@ CREATE TABLE `bucket_list` (
   `created_at` varchar(45) NOT NULL,
   `updcated_at` datetime NOT NULL,
   `flag` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -49,7 +49,7 @@ CREATE TABLE `categories` (
   `created_at` date NOT NULL,
   `updcated_at` datetime NOT NULL,
   `flag` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,49 @@ CREATE TABLE `comments` (
   `users_id` int(11) NOT NULL,
   `places_id` int(11) NOT NULL,
   `comment` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `file_uploaded`
+--
+
+CREATE TABLE `file_uploaded` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `file_uploaded`
+--
+
+INSERT INTO `file_uploaded` (`id`, `user_id`, `title`, `description`) VALUES
+(1, 1, 'asd', 'asdsadsadsad'),
+(2, 1, 'qqqq', 'eeeeee');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `file_uploaded_details`
+--
+
+CREATE TABLE `file_uploaded_details` (
+  `id` int(11) NOT NULL,
+  `file_uploaded_id` int(11) NOT NULL,
+  `filename_uploaded` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `file_uploaded_details`
+--
+
+INSERT INTO `file_uploaded_details` (`id`, `file_uploaded_id`, `filename_uploaded`) VALUES
+(1, 1, 'FB_IMG_1677034936028.jpg'),
+(2, 2, '326063374_1552442658558642_3059229032913156_n.jpg'),
+(3, 2, 'FB_IMG_1677034936028.jpg');
 
 -- --------------------------------------------------------
 
@@ -77,7 +119,7 @@ CREATE TABLE `img` (
   `last_name` text NOT NULL,
   `email` text NOT NULL,
   `password` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -93,7 +135,7 @@ CREATE TABLE `messages` (
   `flag` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updcated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -116,7 +158,7 @@ CREATE TABLE `places` (
   `created_at` datetime NOT NULL,
   `flag` int(11) NOT NULL,
   `updcated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -132,7 +174,7 @@ CREATE TABLE `replies` (
   `created_at` datetime NOT NULL,
   `updcated_at` datetime NOT NULL,
   `flag` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -147,7 +189,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `password` text NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -166,7 +208,8 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `crea
 (12, 'marjorie', 'amoin', 'marjorie.amoin@gmail.com', '$2y$10$92maj.rEWrG/KdznqIQTLe53HMvYX8RJC8FT8VN6mos92UzyE0odO', '2023-04-14 12:04:21'),
 (13, 'marjorie', 'amoin', 'james@yahoo.com', '$2y$10$YZFzn1weoSHyb.XNH5wKYOFZOA7YZVSdCYM4dQYMeF2C3LBklDBci', '2023-04-14 14:28:49'),
 (14, 'marjorie', 'amoin', 'marjorie.amoin@gmail.com', '$2y$10$PCNGajYsl4FPN1fEk4Cw/.zVHuHz8isgv4.74HZ8v4mImlfFbBSPa', '2023-04-14 14:29:58'),
-(15, 'patrick', 'tamboboy', 'patricklumungsod@gmail.com', '$2y$10$z8fJMwu9YIxUQIgYywkXRuON1j8jd9.5521tw4J4sGcxdAgfsNivS', '2023-04-15 20:49:19');
+(15, 'patrick', 'tamboboy', 'patricklumungsod@gmail.com', '$2y$10$z8fJMwu9YIxUQIgYywkXRuON1j8jd9.5521tw4J4sGcxdAgfsNivS', '2023-04-15 20:49:19'),
+(16, 'Jay', 'Demo', 'zulipdem@gmail.com', '$2y$10$JnETUIIDppTVeLOBdb6Lke/.TmB8g8ys1gw.g5IlehQkOR0mB5PkG', '2023-04-16 16:55:34');
 
 --
 -- Indexes for dumped tables
@@ -188,6 +231,18 @@ ALTER TABLE `categories`
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `file_uploaded`
+--
+ALTER TABLE `file_uploaded`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `file_uploaded_details`
+--
+ALTER TABLE `file_uploaded_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -225,6 +280,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `file_uploaded`
+--
+ALTER TABLE `file_uploaded`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `file_uploaded_details`
+--
+ALTER TABLE `file_uploaded_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `img`
 --
 ALTER TABLE `img`
@@ -234,7 +301,7 @@ ALTER TABLE `img`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

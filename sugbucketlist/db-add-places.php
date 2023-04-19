@@ -1,4 +1,6 @@
-<?php include 'includes/admin-header.php';
+<?php 
+  include 'includes/admin-header.php';
+  include('upload_file.php'); 
 ?>
 
 <div class="dashboard" data-x="dashboard" data-x-toggle="-is-sidebar-open">
@@ -25,55 +27,58 @@
           <div class="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
 
             <div class="col-auto">
-              <button class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button is-tab-el-active" data-tab-target=".-tab-item-1">1. Content</button>
+              <button class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button is-tab-el-active" data-tab-target=".-tab-item-1">Upload Places</button>
             </div>
 
             <div class="col-auto">
-              <button class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button " data-tab-target=".-tab-item-2">2. Location</button>
+              <a href="" class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button " data-tab-target=".-tab-item-2">List Places</a>
+              <!-- <button class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button " data-tab-target=".-tab-item-2">List Places</button> -->
             </div>
-
+<!-- 
             <div class="col-auto">
               <button class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button " data-tab-target=".-tab-item-3">3. Pricing</button>
             </div>
 
             <div class="col-auto">
               <button class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button " data-tab-target=".-tab-item-4">4. Attributes</button>
-            </div>
+            </div> -->
 
           </div>
 
           <div class="tabs__content pt-30 js-tabs-content">
             <div class="tabs__pane -tab-item-1 is-tab-el-active">
+              <form method="post" enctype="multipart/form-data">
               <div class="col-xl-10">
                 <div class="text-18 fw-500 mb-10"> Content Creator</div>
                 <div class="row x-gap-20 y-gap-20">
                   <div class="col-12">
 
                     <div class="form-input ">
-                      <input type="text" required>
-                      <label class="lh-1 text-16 text-light-1"> Name</label>
+                      <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
+                      <input type="text" name="title" required>
+                      <label class="lh-1 text-16 text-light-1"> Title</label>
                     </div>
 
                   </div>
                   <div class="col-12">
 
                     <div class="form-input ">
-                      <textarea required rows="5"></textarea>
-                      <label class="lh-1 text-16 text-light-1">Content</label>
+                      <textarea required rows="5" name="description" required></textarea>
+                      <label class="lh-1 text-16 text-light-1">Description</label>
                     </div>
 
                   </div>
                   <div class="col-12">
 
                     <div class="form-input ">
-                      <input type="text" required>
-                      <label class="lh-1 text-16 text-light-1">Youtube Video</label>
+                      <input type="file" name="file_name[]" accept="video/*,image/*" multiple required>
+                      <!-- <label class="lh-1 text-16 text-light-1">Youtube Video</label> -->
                     </div>
 
                   </div>
                 </div>
 
-
+<!-- 
                 <div class="mt-30">
                   <div class="fw-500">Banner Image</div>
 
@@ -324,16 +329,15 @@
                     </div>
 
                   </div>
-                </div>
+                </div> -->
               </div>
-
+             
               <div class="d-inline-block pt-30">
 
-                <a href="#" class="button h-50 px-24 -dark-1 bg-blue-1 text-white">
-                  Save Changes <div class="icon-arrow-top-right ml-15"></div>
-                </a>
-
+                <input class="button h-40 px-24 -dark-1 bg-blue-1 text-white" type="submit" name="submit" value=" Save Changes" />
+                 
               </div>
+              </form>
             </div>
 
             <div class="tabs__pane -tab-item-2">
@@ -1399,7 +1403,7 @@
     </div>
   </div>
 </div>
-
+<?php include 'includes/admin-footer.php'; ?>
 <!-- JavaScript -->
 <script src="../../../cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>

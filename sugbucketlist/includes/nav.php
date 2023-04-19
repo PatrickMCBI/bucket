@@ -53,7 +53,7 @@ session_start();
 
           <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
             <?php if(isset($_SESSION['user_id'])) { ?>
-             <a href="db-dashboard.php" class="button px-30 fw-400 text-14 border-white -outline-white h-50 text-white ml-20">Dashboard</a>
+             <a href="db-dashboard.php" class="button px-30 fw-400 text-14 border-white -outline-white h-50 text-white ml-20" >Dashboard</a>
              <?php } else { ?>
                 <a href="login.php" class="button px-30 fw-400 text-14 -white bg-white h-50 text-dark-1">Login</a>
             <a href="signup.php" class="button px-30 fw-400 text-14 border-white -outline-white h-50 text-white ml-20">Register</a>
