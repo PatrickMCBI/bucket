@@ -1,6 +1,46 @@
-<?php include 'includes/admin-header.php';
-?>
+<?php 
 
+  include 'includes/admin-header.php';
+  session_start();
+
+
+  $conn = new mysqli("localhost", "root", "",  "bucket_db");
+
+  $db=$conn; // Enter your Connection variable;
+  $userid = $_SESSION['user_id'];
+  $displaybucketlist = display_bucketlist($userid);
+
+  function display_bucketlist($userid){
+    global $db;
+    $query = "SELECT a.id, b.title, b.description, a.status FROM `bucket_list` as a JOIN `file_uploaded` as b ON a.places_id = b.id WHERE a.user_id = $userid AND a.status = 1";
+    $result = $db->query($query);
+
+    if ($result->num_rows > 0) {
+      $row= $result->fetch_all(MYSQLI_ASSOC);
+      return $row;
+    }else{
+
+      echo "No files are stored in database  ";
+    }
+  }
+?>
+<style>
+  table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
 
 <div class="dashboard" data-x="dashboard" data-x-toggle="-is-sidebar-open">
 
@@ -22,9 +62,31 @@
 
         </div>
       </div>
+      <table>
+      <tr>
+        <th>Place Name</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      <?php 
+      if(!empty($displaybucketlist)){
+        foreach($displaybucketlist as $data){ ?>
+        <tr>
+          <td><?php echo $data['title']?></td>
+          <td><?php echo $data['description']?></td>
+          <td>done</td>
+          <td>done</td>
+          
+        </tr>
+    <?php          
+            }
+        }
+    
+    ?>
+    </table>
 
-
-      <div class="py-30 px-30 rounded-4 bg-white shadow-3">
+      <!-- <div class="py-30 px-30 rounded-4 bg-white shadow-3">
         <div class="tabs -underline-2 js-tabs">
           <div class="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
 
@@ -1359,7 +1421,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <?php include 'includes/admin-footer.php'; ?>

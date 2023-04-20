@@ -12,7 +12,7 @@
 
   function display_bucketlist($userid){
     global $db;
-    $query = "SELECT a.id, b.title, b.description, a.status FROM `bucket_list` as a JOIN `file_uploaded` as b ON a.places_id = b.id WHERE a.user_id = $userid";
+    $query = "SELECT a.id, b.title, b.description, a.status FROM `bucket_list` as a JOIN `file_uploaded` as b ON a.places_id = b.id WHERE a.user_id = $userid AND a.status = 0";
     $result = $db->query($query);
 
     if ($result->num_rows > 0) {
@@ -60,14 +60,17 @@ tr:nth-child(even) {
 </style>
 
 <div class="dashboard" data-x="dashboard" data-x-toggle="-is-sidebar-open">
-  <?php include 'includes/side-bar.php'; ?>
+
+
+  <?php include 'includes/side-bar.php';
+  ?>
 
   <div class="dashboard__main">
     <div class="dashboard__content bg-light-2">
       <div class="row y-gap-20 justify-between items-end pb-60 lg:pb-40 md:pb-32">
         <div class="col-auto">
 
-          <h1 class="text-30 lh-14 fw-600">Wishlist</h1>
+        <h1 class="text-30 lh-14 fw-600">Wishlist</h1>
           <div class="text-15 text-light-1">Places haven't yet visited or plan to visit. </div>
 
         </div>
@@ -76,8 +79,7 @@ tr:nth-child(even) {
 
         </div>
       </div>
-    </div>
-    <table>
+      <table>
       <tr>
         <th>Place Name</th>
         <th>Description</th>
@@ -90,23 +92,15 @@ tr:nth-child(even) {
         <tr>
           <td><?php echo $data['title']?></td>
           <td><?php echo $data['description']?></td>
-          <?php if($data['status'] == 0) { ?>
-            <td>Whishlist</td>
+          <td>Whishlist</td>
 
-          <?php } else { ?>
-            <td>done</td>
-          <?php } ?>
-          <?php if($data['status'] == 0) { ?>
-            <td>
-              <form method="post">
-                  <input type="hidden" name="bucket_id" value="<?php echo $data['id'] ?>">
-                  <input type="submit" name="update" value="mark as done" style="border: 1px solid green;">
-              </form>
-            </td>
-
-          <?php } else { ?>
-            <td>done</td>
-          <?php } ?>
+          <td>
+            <form method="post">
+                <input type="hidden" name="bucket_id" value="<?php echo $data['id'] ?>">
+                <input type="submit" name="update" value="mark as done" style="border: 1px solid green;">
+            </form>
+          </td>
+          
         </tr>
     <?php          
             }
@@ -114,36 +108,1360 @@ tr:nth-child(even) {
     
     ?>
     </table>
-    
+
+      <!-- <div class="py-30 px-30 rounded-4 bg-white shadow-3">
+        <div class="tabs -underline-2 js-tabs">
+          <div class="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
+
+            <div class="col-auto">
+              <button class="tabs__button text-18 lg:text-16 text-light-1 fw-500 pb-5 lg:pb-0 js-tabs-button is-tab-el-active" data-tab-target=".-tab-item-1">PLACES ALREADY VISITED</button>
+            </div>
+
+          </div>
+
+          <div class="tabs__content pt-30 js-tabs-content">
+
+            <div class="tabs__pane -tab-item-1 is-tab-el-active">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>plcae</th>
+                      <th>location</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Places</td>
+                      <td>Fort San Pedro</td>
+
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tabs__pane -tab-item-2 ">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>Type</th>
+                      <th>Title</th>
+                      <th>Order Date</th>
+                      <th>Execution Time</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Remain</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">Pending</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-1-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-1-toggle" data-el-toggle-active=".js-actions-1-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-2-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-2-toggle" data-el-toggle-active=".js-actions-2-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-2-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-red-3 text-red-2">Rejected</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-3-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-3-toggle" data-el-toggle-active=".js-actions-3-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-3-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-4-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-4-toggle" data-el-toggle-active=".js-actions-4-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-4-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-5-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-5-toggle" data-el-toggle-active=".js-actions-5-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-5-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tabs__pane -tab-item-3 ">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>Type</th>
+                      <th>Title</th>
+                      <th>Order Date</th>
+                      <th>Execution Time</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Remain</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">Pending</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-1-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-1-toggle" data-el-toggle-active=".js-actions-1-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-2-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-2-toggle" data-el-toggle-active=".js-actions-2-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-2-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-red-3 text-red-2">Rejected</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-3-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-3-toggle" data-el-toggle-active=".js-actions-3-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-3-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-4-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-4-toggle" data-el-toggle-active=".js-actions-4-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-4-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-5-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-5-toggle" data-el-toggle-active=".js-actions-5-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-5-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tabs__pane -tab-item-4 ">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>Type</th>
+                      <th>Title</th>
+                      <th>Order Date</th>
+                      <th>Execution Time</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Remain</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">Pending</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-1-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-1-toggle" data-el-toggle-active=".js-actions-1-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-2-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-2-toggle" data-el-toggle-active=".js-actions-2-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-2-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-red-3 text-red-2">Rejected</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-3-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-3-toggle" data-el-toggle-active=".js-actions-3-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-3-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-4-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-4-toggle" data-el-toggle-active=".js-actions-4-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-4-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-5-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-5-toggle" data-el-toggle-active=".js-actions-5-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-5-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tabs__pane -tab-item-5 ">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>Type</th>
+                      <th>Title</th>
+                      <th>Order Date</th>
+                      <th>Execution Time</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Remain</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">Pending</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-1-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-1-toggle" data-el-toggle-active=".js-actions-1-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-2-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-2-toggle" data-el-toggle-active=".js-actions-2-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-2-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-red-3 text-red-2">Rejected</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-3-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-3-toggle" data-el-toggle-active=".js-actions-3-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-3-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-4-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-4-toggle" data-el-toggle-active=".js-actions-4-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-4-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-5-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-5-toggle" data-el-toggle-active=".js-actions-5-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-5-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tabs__pane -tab-item-6 ">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>Type</th>
+                      <th>Title</th>
+                      <th>Order Date</th>
+                      <th>Execution Time</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Remain</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">Pending</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-1-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-1-toggle" data-el-toggle-active=".js-actions-1-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-2-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-2-toggle" data-el-toggle-active=".js-actions-2-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-2-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-red-3 text-red-2">Rejected</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-3-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-3-toggle" data-el-toggle-active=".js-actions-3-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-3-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-4-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-4-toggle" data-el-toggle-active=".js-actions-4-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-4-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-5-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-5-toggle" data-el-toggle-active=".js-actions-5-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-5-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tabs__pane -tab-item-7 ">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>Type</th>
+                      <th>Title</th>
+                      <th>Order Date</th>
+                      <th>Execution Time</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Remain</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">Pending</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-1-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-1-toggle" data-el-toggle-active=".js-actions-1-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="tabs__pane -tab-item-8 ">
+              <div class="overflow-scroll scroll-bar-1">
+                <table class="table-3 -border-bottom col-12">
+                  <thead class="bg-light-2">
+                    <tr>
+                      <th>Type</th>
+                      <th>Title</th>
+                      <th>Order Date</th>
+                      <th>Execution Time</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Remain</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">Pending</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-1-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-1-toggle" data-el-toggle-active=".js-actions-1-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-1-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-2-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-2-toggle" data-el-toggle-active=".js-actions-2-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-2-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-red-3 text-red-2">Rejected</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-3-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-3-toggle" data-el-toggle-active=".js-actions-3-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-3-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-4-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-4-toggle" data-el-toggle-active=".js-actions-4-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-4-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Hotel</td>
+                      <td>The May Fair Hotel</td>
+                      <td>04/04/2022</td>
+                      <td class="lh-16">Check in : 05/14/2022<br>Check out : 05/29/2022</td>
+                      <td class="fw-500">$130</td>
+                      <td>$0</td>
+                      <td>$35</td>
+                      <td><span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">Confirmed</span></td>
+
+                      <td>
+                        <div class="dropdown js-dropdown js-actions-5-active">
+                          <div class="dropdown__button d-flex items-center rounded-4 text-blue-1 bg-blue-1-05 text-14 px-15 py-5" data-el-toggle=".js-actions-5-toggle" data-el-toggle-active=".js-actions-5-active">
+                            <span class="js-dropdown-title">Actions</span>
+                            <i class="icon icon-chevron-sm-down text-7 ml-10"></i>
+                          </div>
+
+                          <div class="toggle-element -dropdown-2 js-click-dropdown js-actions-5-toggle">
+                            <div class="text-14 fw-500 js-dropdown-list">
+
+                              <div><a href="#" class="d-block js-dropdown-link">Details</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Invoice</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Confirm</a></div>
+
+                              <div><a href="#" class="d-block js-dropdown-link">Cancel</a></div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="pt-30">
+          <div class="row justify-between">
+            <div class="col-auto">
+              <button class="button -blue-1 size-40 rounded-full border-light">
+                <i class="icon-chevron-left text-12"></i>
+              </button>
+            </div>
+
+            <div class="col-auto">
+              <div class="row x-gap-20 y-gap-20 items-center">
+
+                <div class="col-auto">
+
+                  <div class="size-40 flex-center rounded-full">1</div>
+
+                </div>
+
+                <div class="col-auto">
+
+                  <div class="size-40 flex-center rounded-full bg-dark-1 text-white">2</div>
+
+                </div>
+
+                <div class="col-auto">
+
+                  <div class="size-40 flex-center rounded-full">3</div>
+
+                </div>
+
+                <div class="col-auto">
+
+                  <div class="size-40 flex-center rounded-full bg-light-2">4</div>
+
+                </div>
+
+                <div class="col-auto">
+
+                  <div class="size-40 flex-center rounded-full">5</div>
+
+                </div>
+
+                <div class="col-auto">
+
+                  <div class="size-40 flex-center rounded-full">...</div>
+
+                </div>
+
+                <div class="col-auto">
+
+                  <div class="size-40 flex-center rounded-full">20</div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <button class="button -blue-1 size-40 rounded-full border-light">
+                <i class="icon-chevron-right text-12"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+      <?php include 'includes/admin-footer.php'; ?>
+    </div>
   </div>
-   <!-- <div id="show-map">
+</div>
 
-    </div> -->
+<!-- JavaScript -->
+<script src="../../../cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
+<script src="../../../unpkg.com/%40googlemaps/markerclusterer%402.0.15/dist/index.min.js"></script>
 
-  <!-- JavaScript -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
-  <script src="../../../unpkg.com/%40googlemaps/markerclusterer%402.0.15/dist/index.min.js"></script>
-
-  <script src="js/vendors.js"></script>
-  <script src="js/main.js"></script>
-
-  <script>
-
-let place = encodeURIComponent("Fort San Pedro");
-
-let url = `https://nominatim.openstreetmap.org/search/${place}?format=json&addressdetails=1&limit=1&polygon_svg=1`
-  fetch(url, {
-      method: "GET"
-      
-  })
-  .then(function(response){
-      return response.json();
-  })
-  .then(function(data){
-
-    document.querySelector("#show-map").innerHTML = `<a href="https://www.openstreetmap.org/search?whereami=1&query=${data[0].lat}%2C${data[0].lon}#map=19/${data[0].lat}/${data[0].lon}">Show Map</a>`;
-    console.log(data)
-  });
-</script>
+<script src="js/vendors.js"></script>
+<script src="js/main.js"></script>
 </body>
 
+
+<!-- Mirrored from creativelayers.net/themes/gotrip-html/db-booking.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Jan 2023 10:10:06 GMT -->
+
+</html>

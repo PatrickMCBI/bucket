@@ -14,7 +14,7 @@ include 'includes/admin-header.php';
         <div class="col-auto">
 
           <h1 class="text-30 lh-14 fw-600">Dashboard</h1>
-          <div class="text-15 text-light-1">akoy bahala</div>
+          <!-- <div class="text-15 text-light-1">akoy bahala</div> -->
 
         </div>
 
@@ -24,7 +24,7 @@ include 'includes/admin-header.php';
       </div>
 
 
-      <div class="row y-gap-30">
+      <!-- <div class="row y-gap-30">
         <div class="col-xl-12 col-md-12">
           <div class="py-30 px-30 rounded-4 bg-white shadow-3">
             <div class="d-flex justify-between items-center">
@@ -111,7 +111,7 @@ include 'includes/admin-header.php';
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <?php include 'includes/admin-footer.php'; ?>

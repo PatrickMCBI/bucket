@@ -40,7 +40,7 @@
     </div>
 
     <div class="sidebar__item">
-      <div class="sidebar__button -is-active">
+      <div class="sidebar__button">
         <a href="db-add-places.php" class="d-flex items-center text-15 lh-1 fw-500">
           <img src="img/dashboard/sidebar/map.svg" alt="image" class="mr-10">
             Add Places
