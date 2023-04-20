@@ -12,7 +12,7 @@
 
   function display_bucketlist($userid){
     global $db;
-    $query = "SELECT b.title, b.description, a.status FROM `bucket_list` as a JOIN `file_uploaded` as b ON a.places_id = b.id WHERE a.user_id = $userid";
+    $query = "SELECT a.id, b.title, b.description, a.status FROM `bucket_list` as a JOIN `file_uploaded` as b ON a.places_id = b.id WHERE a.user_id = $userid";
     $result = $db->query($query);
 
     if ($result->num_rows > 0) {
@@ -22,6 +22,23 @@
 
       echo "No files are stored in database  ";
     }
+  }
+
+  if(isset($_POST['update'])){
+    $bucketid = $_POST['bucket_id'];
+    //  uploading files
+    echo update_bucketlist($bucketid);
+  }   
+  function update_bucketlist($bucketid){
+    global $db;
+    $query = "UPDATE bucket_list SET `status`= 1 WHERE id=$bucketid";
+
+    if ($db->query($query) === TRUE) {
+      echo "successfully Marked";
+    } else {
+      echo "Error updating record: " . $conn->error;
+    }
+
   }
 ?>
 <style>
@@ -81,7 +98,10 @@ tr:nth-child(even) {
           <?php } ?>
           <?php if($data['status'] == 0) { ?>
             <td>
-              <input type="submit" name="submit" value="mark as done" style="border: 1px solid green;">
+              <form method="post">
+                <input type="hidden" name="bucket_id" value="<?php echo $data['id'] ?>">
+                <input type="submit" name="update" value="mark as done" style="border: 1px solid green;">
+              </form>
             </td>
 
           <?php } else { ?>
