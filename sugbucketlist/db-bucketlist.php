@@ -99,8 +99,8 @@ tr:nth-child(even) {
           <?php if($data['status'] == 0) { ?>
             <td>
               <form method="post">
-                <input type="hidden" name="bucket_id" value="<?php echo $data['id'] ?>">
-                <input type="submit" name="update" value="mark as done" style="border: 1px solid green;">
+                  <input type="hidden" name="bucket_id" value="<?php echo $data['id'] ?>">
+                  <input type="submit" name="update" value="mark as done" style="border: 1px solid green;">
               </form>
             </td>
 

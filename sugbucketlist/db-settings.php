@@ -1,4 +1,30 @@
-<?php include 'includes/admin-header.php';
+<?php 
+
+  include 'includes/admin-header.php';
+  session_start();
+
+  $conn = new mysqli("localhost", "root", "",  "bucket_db");
+
+  $db=$conn; // Enter your Connection variable;
+  $userid = $_SESSION['user_id'];
+
+  $userinfo = display_userinfo($userid);
+
+  function display_userinfo($userid){
+    global $db;
+    $query = "SELECT * FROM `users` WHERE id = $userid";
+    $result = $db->query($query);
+
+    if ($result->num_rows > 0) {
+      $row= $result->fetch_all(MYSQLI_ASSOC);
+      return $row;
+    }else{
+
+      echo "No files are stored in database  ";
+    }
+  }
+
+
 ?>
 <div class="dashboard" data-x="dashboard" data-x-toggle="-is-sidebar-open">
   <?php include 'includes/side-bar.php'; ?>
@@ -67,23 +93,25 @@
               </div>
 
               <div class="border-top-light mt-30 mb-30"></div>
-
+              <?php 
+                 foreach($userinfo as $data){
+              ?>
               <div class="col-xl-9">
                 <div class="row x-gap-20 y-gap-20">
-                  <div class="col-12">
+                  <!-- <div class="col-12">
 
                     <div class="form-input ">
                       <input type="text" required>
                       <label class="lh-1 text-16 text-light-1">Business Name</label>
                     </div>
 
-                  </div>
+                  </div> -->
 
                   <div class="col-12">
 
-                    <div class="form-input ">
-                      <input type="text" id="uname" required>
-                      <label class="lh-1 text-16 text-light-1">User Name</label>
+                    <div class="form-input">
+                      <input type="text" id="uname" value="<?php echo $data['email'] ?>" readonly >
+                      <label class="lh-1 text-16 text-light-1" style="top: 12px;">User Name</label>
                     </div>
 
                   </div>
@@ -91,8 +119,8 @@
                   <div class="col-md-6">
 
                     <div class="form-input ">
-                      <input type="text" id="fname" required>
-                      <label class="lh-1 text-16 text-light-1">First Name</label>
+                      <input type="text" id="fname"  value="<?php echo $data['first_name'] ?>" readonly>
+                      <label class="lh-1 text-16 text-light-1" style="top: 12px;">First Name</label>
                     </div>
 
                   </div>
@@ -100,22 +128,22 @@
                   <div class="col-md-6">
 
                     <div class="form-input ">
-                      <input type="text"id="lname" required>
-                      <label class="lh-1 text-16 text-light-1">Last Name</label>
+                      <input type="text"id="lname" value="<?php echo $data['last_name'] ?>" readonly>
+                      <label class="lh-1 text-16 text-light-1" style="top: 12px;">Last Name</label>
                     </div>
 
                   </div>
 
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
 
                     <div class="form-input ">
                       <input type="text" id="email" required>
                       <label class="lh-1 text-16 text-light-1">Email</label>
                     </div>
 
-                  </div>
+                  </div> -->
 
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
 
                     <div class="form-input ">
                       <input type="text" id="pnum" required>
@@ -140,18 +168,18 @@
                       <label class="lh-1 text-16 text-light-1">About Yourself</label>
                     </div>
 
-                  </div>
+                  </div> -->
                 </div>
               </div>
-
+              <?php }?>      
               <div class="d-inline-block pt-30">
 
                 <!-- <a href="#" class="button h-50 px-24 -dark-1 bg-blue-1 text-white">
                   Save Changes <div class="icon-arrow-top-right ml-15"></div>
                 </a> -->
-                <button onclick="savephoto()" class="button h-50 px-24 -dark-1 bg-blue-1 text-white">
+                <!-- <button onclick="savephoto()" class="button h-50 px-24 -dark-1 bg-blue-1 text-white">
                   Save Changes <div class="icon-arrow-top-right ml-15"></div>
-                </button>
+                </button> -->
 
               </div>
             </div>
