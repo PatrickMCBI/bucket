@@ -56,7 +56,7 @@
                     <div class="form-input ">
                       <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
                       <input type="text" name="title" required>
-                      <label class="lh-1 text-16 text-light-1"> Title</label>
+                      <label class="lh-1 text-16 text-light-1"> Place Name</label>
                     </div>
 
                   </div>

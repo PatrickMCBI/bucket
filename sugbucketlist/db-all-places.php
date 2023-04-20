@@ -33,7 +33,7 @@
         
         global $db;
          if(!empty($id)){
-            $query = "SELECT * FROM `file_uploaded` WHERE id = ".$id.";";
+            $query = "SELECT a.id, a.user_id, a.title, a.description, b.places_id, b.status FROM `file_uploaded` as a LEFT JOIN `bucket_list` as b on a.id = b.places_id  WHERE a.id = ".$id.";";
             $result = $db->query($query);
 
           if ($result->num_rows > 0) {
@@ -46,6 +46,28 @@
         }
         else{
             echo "your Url has invalid";
+        }
+
+    }
+
+    if(isset($_POST['submit'])) // If the submit button was clicked
+    {
+        echo save_bucketlist();
+
+    }
+    function save_bucketlist(){
+        global $db;
+
+        $userid = $_POST['user_id'];
+        $placeid = $_POST['places_id'];
+
+        $store="INSERT INTO `bucket_list`(`user_id`, `places_id`, `status`) VALUES ('$userid','$placeid',0)";
+        $exec= $db->query($store);
+       
+        if ($exec) {
+            echo 1;
+        } else {
+            echo 0;
         }
 
     }
@@ -103,5 +125,14 @@
             }
         }
     ?>
+    <form method="post">
+        <input type="hidden" name="places_id" value="<?php echo $id ?>">
+        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
+        <?php 
+            if($fileData['places_id'] === NULL){ ?>
+                <input type="submit" name="submit" value="add to bucketlist">
+        <?php } ?>
+       
+    </form>
 </body>
 </html>

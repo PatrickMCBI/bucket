@@ -50,7 +50,7 @@
 
     <div class="sidebar__item">
       <div class="sidebar__button ">
-        <a href="#" class="d-flex items-center text-15 lh-1 fw-500">
+        <a href="logout.php" class="d-flex items-center text-15 lh-1 fw-500">
           <img src="img/dashboard/sidebar/log-out.svg" alt="image" class="mr-15">
           Logout
         </a>
